@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import MovieCard from "./MovieCard";
 import SearchIcon from "./search.svg";
 import "./App.css";
+import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -11,6 +12,9 @@ const API_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([]);
+
+  
+  
 
   const searchMovies = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
@@ -22,6 +26,12 @@ const App = () => {
   useEffect(() => {
     searchMovies("roman holiday");
   }, []);
+
+  onKeyUp(KeyboardEvent) {
+    if (KeyboardEvent.key === "Enter") {
+      this.setState({ searchTerm: KeyboardEvent.target.value });
+    }
+}
 
   return (
     <div className="app">
@@ -37,6 +47,7 @@ const App = () => {
           src={SearchIcon}
           alt="search"
           onClick={() => searchMovies(searchTerm)}
+          
         />
       </div>
 
